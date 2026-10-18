@@ -1,11 +1,3 @@
-Here’s how your professional GitHub README will look. You can copy the entire content using the button at the bottom.
-
-SB-Rest-CRUD
-
-README preview · Spring Boot REST API
-
-Markdown
-
 ## SB-Rest-CRUD
 
 A RESTful API built with Spring Boot to perform CRUD operations with MySQL integration and centralized exception handling.
