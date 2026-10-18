@@ -41,10 +41,10 @@ Maven
 | -------- | ----------------- |
 | `GET`    | `/welcome`        |
 | `POST`   | `/save`           |
-| `GET`    | `/product/DIL4` |
+| `GET`    | `/product/id` |
 | `GET`    | `/products`       |
 | `PUT`    | `/update`         |
-| `DELETE` | `/delete/DIL5`  |
+| `DELETE` | `/delete/id`  |
 
 ## 🚀 Getting Started
 
