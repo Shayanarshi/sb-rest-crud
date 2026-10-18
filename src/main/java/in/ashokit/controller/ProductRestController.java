@@ -1,6 +1,5 @@
 package in.ashokit.controller;
-
-import com.sun.net.httpserver.HttpsServer;
+import in.ashokit.exception.ResourceNotFoundException;
 import in.ashokit.model.Product;
 import in.ashokit.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -12,9 +11,16 @@ import java.util.List;
 @RestController
 public class ProductRestController {
     private ProductService service;
+
     public  ProductRestController(ProductService service){
         this.service=service;
     }
+
+    @GetMapping(value = "/welcome")
+    public ResponseEntity<String> sayWelcome(){
+        return new ResponseEntity<>("Welcome to Rest API,Let's Study.",HttpStatus.OK);
+    }
+
     @PostMapping(value = "/save")
     public ResponseEntity<Product> storeProduct(@RequestBody Product product){
         Product productFromService = service.saveProduct(product);
@@ -27,7 +33,7 @@ public class ProductRestController {
         if (productFromService!=null){
             return new ResponseEntity<>(productFromService,HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException("Product with id: "+ id + "doesn't exist");
         }
     }
 
