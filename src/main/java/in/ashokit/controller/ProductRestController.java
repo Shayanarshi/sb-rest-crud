@@ -16,11 +16,6 @@ public class ProductRestController {
         this.service=service;
     }
 
-    @GetMapping(value = "/welcome")
-    public ResponseEntity<String> sayWelcome(){
-        return new ResponseEntity<>("Welcome to Rest API,Let's Study.",HttpStatus.OK);
-    }
-
     @PostMapping(value = "/save")
     public ResponseEntity<Product> storeProduct(@RequestBody Product product){
         Product productFromService = service.saveProduct(product);
