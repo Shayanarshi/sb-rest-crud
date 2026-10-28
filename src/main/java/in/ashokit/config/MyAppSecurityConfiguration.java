@@ -26,7 +26,7 @@ public class MyAppSecurityConfiguration {
                                 .requestMatchers(HttpMethod.DELETE, "/api/delete/{id}")
                                 .hasAnyRole("ADMIN")
                                 .requestMatchers("/api/**")
-                                .permitAll())
+                                .authenticated())
                 .httpBasic(Customizer.withDefaults());
         http.csrf(CsrfConfigurer::disable);
         return http.build();
@@ -39,10 +39,10 @@ public class MyAppSecurityConfiguration {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails admin = User.builder().username("Shayan")
-                .password(passwordEncoder().encode("shayan@123"))
+                .password(passwordEncoder().encode("Shayan@123"))
                 .roles("ADMIN").build();
         UserDetails user = User.builder().username("Arshi")
-                .password(passwordEncoder().encode("arshi@123"))
+                .password(passwordEncoder().encode("Arshi@123"))
                 .roles("USER").build();
         return new InMemoryUserDetailsManager(admin, user);
     }

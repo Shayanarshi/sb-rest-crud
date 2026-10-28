@@ -15,6 +15,7 @@ import java.util.List;
 @Tag(name = "Products",description = "Product REST API endpoints")
 
 @RestController
+@RequestMapping("/api")
 public class ProductRestController {
     private ProductService service;
 
