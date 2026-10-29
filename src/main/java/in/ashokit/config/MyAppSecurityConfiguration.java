@@ -1,5 +1,6 @@
 package in.ashokit.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,11 +14,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 @EnableMethodSecurity
 @Configuration
 public class MyAppSecurityConfiguration {
+
+    @Autowired
+    DataSource dataSource;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -26,7 +33,7 @@ public class MyAppSecurityConfiguration {
                                 .requestMatchers(HttpMethod.DELETE, "/api/delete/{id}")
                                 .hasAnyRole("ADMIN")
                                 .requestMatchers("/api/**")
-                                .authenticated())
+                                .permitAll())
                 .httpBasic(Customizer.withDefaults());
         http.csrf(CsrfConfigurer::disable);
         return http.build();
@@ -38,13 +45,6 @@ public class MyAppSecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails admin = User.builder().username("Shayan")
-                .password(passwordEncoder().encode("Shayan@123"))
-                .roles("ADMIN").build();
-        UserDetails user = User.builder().username("Arshi")
-                .password(passwordEncoder().encode("Arshi@123"))
-                .roles("USER").build();
-        return new InMemoryUserDetailsManager(admin, user);
-    }
-
+            return new JdbcUserDetailsManager(dataSource);
+        }
 }
